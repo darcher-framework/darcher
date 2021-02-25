@@ -7,8 +7,8 @@ import {Level} from "log4js";
 
 log4js.addLayout('darcherConsole', config => {
     return logEvent => {
-        const month = logEvent.startTime.getMonth().toString().padStart(2, "0");
-        const day = logEvent.startTime.getDay().toString().padStart(2, "0");
+        const month = (logEvent.startTime.getMonth() + 1).toString().padStart(2, "0");
+        const day = logEvent.startTime.getDate().toString().padStart(2, "0");
         const hour = logEvent.startTime.getHours().toString().padStart(2, "0");
         const minute = logEvent.startTime.getMinutes().toString().padStart(2, "0");
         const second = logEvent.startTime.getSeconds().toString().padStart(2, "0");

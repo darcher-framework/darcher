@@ -9,6 +9,7 @@ if (require.main === module) {
         const subjectDir = path.join(__dirname, "..");
         const ethereumVotingDappConfig: ExperimentConfig = Object.assign(_.cloneDeep(baseConfig), {
             dappName: "ethereum_voting_dapp",
+            dappUrl: "http://localhost:8080",
             crawljaxClassName: "EthereumVotingDAppExperiment",
             resultDir: path.join(subjectDir, "results"),
             composeFile: path.join(subjectDir, "docker-compose.yml"),
@@ -17,7 +18,7 @@ if (require.main === module) {
                 grpcPort: 1234,
                 wsPort: 1235,
                 traceStorePort: 1236,
-                txStateChangeProcessTime: 3000,
+                txStateChangeProcessTime: 15000,
             },
             dbMonitorConfig: {
                 db: DBOptions.html,

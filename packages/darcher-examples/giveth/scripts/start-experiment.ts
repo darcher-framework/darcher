@@ -27,6 +27,7 @@ if (require.main === module) {
         const subjectDir = path.join(__dirname, "..");
         const givethConfig: ExperimentConfig = Object.assign(_.cloneDeep(baseConfig), {
             dappName: "giveth",
+            dappUrl: "http://localhost:3010",
             crawljaxClassName: "GivethExperiment",
             resultDir: path.join(subjectDir, "results"),
             composeFile: path.join(subjectDir, "docker-compose.yml"),
@@ -35,7 +36,7 @@ if (require.main === module) {
                 grpcPort: 1234,
                 wsPort: 1235,
                 traceStorePort: 1236,
-                txStateChangeProcessTime: 3000,
+                txStateChangeProcessTime: 15000,
             },
             dbMonitorConfig: {
                 db: DBOptions.mongoDB,
@@ -57,35 +58,7 @@ if (require.main === module) {
                     .changeAccount("Giveth0")
                     .resetAccount()
                     .do();
-                // TODO start dapp
-                // return new Promise<void>(resolve => {
-                //     // start dapp
-                //     dappProcess = child_process.spawn("/bin/sh", ["./start-dapp.sh"], {
-                //         cwd: path.join(__dirname),
-                //         stdio: "pipe",
-                //     })
-                //     dappProcess.stdout.setEncoding("utf-8");
-                //     dappProcess.stdout.on("data", data => {
-                //         data = data.trim();
-                //         data && process.stdout.write(data);
-                //         if (data.includes("App running")) {
-                //             resolve();
-                //         }
-                //     });
-                //     dappProcess.stderr.pipe(process.stderr);
-                // });
             },
-
-            afterRoundEndHook: () => {
-                // TODO stop dapp
-                // TODO clear indexedDB
-                // dappProcess.kill("SIGINT");
-                // return new Promise<void>(resolve => {
-                //     dappProcess.on("exit", () => {
-                //         resolve();
-                //     })
-                // });
-            }
         });
         await startExperiment(givethConfig);
     })().catch(e => console.error(e));

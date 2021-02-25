@@ -1,11 +1,11 @@
 {
   "name": "darcher",
   "version": "1.0.0",
-  "description": "dApp reorg checker",
+  "description": "DArcher - A Testing Framework for Decentralized Applications",
   "repository": {
-    "url": "https://github.com/Troublor/dArcher"
+    "url": "https://github.com/darcher-framework/darcher"
   },
-  "author": "Troublor",
+  "author": "DArcher Framework",
   "license": "ISC",
   "private": true,
   "workspaces": {

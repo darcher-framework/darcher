@@ -137,3 +137,5 @@ analysis_data/
 
 */**/nohup.out
 experiment-results
+ChromeProfile
+/update-chrome-profile.sh

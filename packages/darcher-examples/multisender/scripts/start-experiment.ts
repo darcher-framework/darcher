@@ -8,7 +8,8 @@ if (require.main === module) {
     (async () => {
         const subjectDir = path.join(__dirname, "..");
         const multisenderConfig: ExperimentConfig = Object.assign(_.cloneDeep(baseConfig), {
-            dappName: "multisender",
+            dappName: "Multisender",
+            dappUrl: "http://localhost:3000",
             crawljaxClassName: "MultisenderExperiment",
             resultDir: path.join(subjectDir, "results"),
             composeFile: path.join(subjectDir, "docker-compose.yml"),
@@ -17,7 +18,7 @@ if (require.main === module) {
                 grpcPort: 1234,
                 wsPort: 1235,
                 traceStorePort: 1236,
-                txStateChangeProcessTime: 3000,
+                txStateChangeProcessTime: 15000,
             },
             dbMonitorConfig: {
                 db: DBOptions.html,

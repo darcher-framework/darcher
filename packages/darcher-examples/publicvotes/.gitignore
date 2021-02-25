@@ -2,3 +2,6 @@
 data/
 blockchain/doer
 blockchain/talker
+publicvotes
+.gitignore
+results

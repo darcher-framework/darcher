@@ -1,7 +1,7 @@
 import * as child_process from "child_process";
 import * as path from "path";
 import * as Stream from "stream";
-import {Logger, Service} from "@darcher/helpers";
+import {Logger, Service, sleep} from "@darcher/helpers";
 import {Darcher} from "@darcher/analyzer";
 import {mainAccountAddress} from "./config/sovereign.config";
 import {TxMsg} from "@darcher/rpc";
@@ -89,14 +89,15 @@ export class ProposalService implements Service {
                 if (code === 0) {
                     if (this.darcher.currentAnalyzer &&
                         this.darcher.currentAnalyzer.log) {
-                        this.darcher.currentAnalyzer.log.stack = ["submit proposal"];
+                        this.darcher.currentAnalyzer.log.stack = undefined;
                     }
+                    await sleep(1000);
                     await this.darcher.dappTestDriverHandler.waitForTxProcess(new TxMsg());
                     setTimeout(() => {
                         this.readyToProcess.push({
                             id: this.count,
                         });
-                    }, 20 * 60 * 1000);
+                    }, 10 * 60 * 1000);
                     this.count++;
                 } else {
                     this.logger.warn("submit proposal failed");

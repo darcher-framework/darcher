@@ -8,10 +8,12 @@ import {Darcher} from "@darcher/analyzer";
 import {AnalyzerConfig, ControllerOptions, DBMonitorConfig, DBOptions} from "@darcher/config/dist";
 import {WebDriver} from "selenium-webdriver";
 import DBMonitor from "@darcher/dbmonitor";
+import axios from "axios";
 
 export interface ExperimentConfig {
     dappName: string,
     crawljaxClassName: string,
+    dappUrl: string,
     resultDir: string,
     composeFile: string,
 
@@ -39,7 +41,8 @@ export interface ExperimentConfig {
     beforeAllRoundsHook?: (logger: Logger) => Promise<void>,
     beforeStartRoundHook?: (logger: Logger) => Promise<void>,
     beforeStartDockerHook?: (logger: Logger, webDriver: WebDriver) => Promise<void>,
-    beforeStartCrawljaxHook?: (logger: Logger, webDriver: WebDriver) => Promise<void>,
+    beforeStartCrawljaxHook?: (logger: Logger, webDriver: WebDriver, darcher:Darcher) => Promise<void>,
+    afterCrawljaxEndHook?: (logger: Logger, webDriver: WebDriver, darcher: Darcher) => Promise<void>,
     afterRoundFinishHook?: (logger: Logger) => Promise<void>,
 }
 
@@ -141,6 +144,21 @@ export async function startExperiment(config: ExperimentConfig) {
             await darcherService.shutdown();
         });
 
+
+        // wait for DApp to finish initialization
+        if (config.dappUrl) {
+            logger.info(`Waiting for ${config.dappName} initialization...`);
+            while (true) {
+                try{
+                    await axios.get(config.dappUrl);
+                }catch(e){
+                    continue;
+                }
+                break;
+            }
+            logger.info(`${config.dappName} initialization finished`);
+        }
+
         // start dbmonitor if necessary
         let dbMonitor: DBMonitor | undefined = undefined;
         switch (config.dbMonitorConfig.db) {
@@ -155,6 +173,7 @@ export async function startExperiment(config: ExperimentConfig) {
                     clusters: [],
                     logDir: dataDir,
                 });
+                await dbMonitor.start();
                 cleanUpTasks.push(async () => {
                     logger.info("Stopping dbmonitor...");
                     await dbMonitor.shutdown();
@@ -167,12 +186,13 @@ export async function startExperiment(config: ExperimentConfig) {
         }
 
         // start crawljax
-        config.beforeStartCrawljaxHook && await config.beforeStartCrawljaxHook(logger, browser.driver);
+        config.beforeStartCrawljaxHook && await config.beforeStartCrawljaxHook(logger, browser.driver, darcherService);
         logger.info("Starting crawljax...");
-        await startCrawljax(logger, `localhost:${config.chromeDebugPort}`, config.crawljaxClassName, config.timeBudget, dataDir);
+        await startCrawljax(logger, `localhost:${config.chromeDebugPort}`, config.metamaskUrl, config.metamaskPassword, config.crawljaxClassName, config.timeBudget, dataDir);
 
         const time = config.analyzerConfig.txStateChangeProcessTime ? config.analyzerConfig.txStateChangeProcessTime : 15000;
         await sleep(time * 6);
+        config.afterCrawljaxEndHook && await config.afterCrawljaxEndHook(logger, browser.driver, darcherService);
 
         await doCleanUp();
     }
@@ -195,14 +215,14 @@ export const baseConfig = {
     dockerStartWaitingTime: 5000,
 
     timeBudget: 3600,
-    numRounds: 10,
+    numRounds: 1,
 
     // metamask
-    metamaskUrl: "chrome-extension://kdaoeelmbdcinklhldlcmmgmndjcmjpp/home.html",
+    metamaskUrl: "chrome-extension://omcfdmdoacelhhhjehbcdgmogdpfkipc/home.html",
     metamaskPassword: "12345678",
 
     // chrome
-    chromeUserDir: "/home/troublor/workspace/darcher_misc/browsers/Chrome/UserData",
+    chromeUserDir: path.join(__dirname, "..", "..", "..", "ChromeProfile"),
     chromeDebugPort: 9222,
 };
 
