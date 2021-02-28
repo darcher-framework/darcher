@@ -136,6 +136,5 @@ analysis_data/
 .DS_Store
 
 */**/nohup.out
-experiment-results
 ChromeProfile
 /update-chrome-profile.sh
