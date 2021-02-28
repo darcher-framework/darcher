@@ -2,7 +2,6 @@
 
 A testing framework to detecting on-chain-off-chain synchronization bugs in decentralized applications (DApp). 
 
-**This README is to be UPDATED**
 This repo contains the source code and experiment results for FSE2021 submission #98.
 
 ## Prerequisites
@@ -14,7 +13,7 @@ This repo contains the source code and experiment results for FSE2021 submission
 ## Install
 Clone this project and go into the project directory:
 ```bash
-git clone https://github.com/ĐArcher-framework/ĐArcher.git && cd ĐArcher 
+git clone https://github.com/darcher-framework/darcher.git && cd darcher 
 ```
 
 Install dependencies and build TypeScript.
@@ -55,3 +54,10 @@ The report (a `.report.json` file) shall be generated at the current directory.
 
 The report groups transactions with the stack trace where they are initiated in DApps,
 and mark them as buggy if they violate oracles in ĐArcher or baselines.
+
+## Use ĐArcher to Test DApps
+
+**This section is to be UPDATED**
+
+### Preparation
+
