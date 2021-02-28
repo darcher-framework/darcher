@@ -16,3 +16,15 @@ test.ts
 !multisender.analyze.ts
 !publicvotes.analyze.ts
 !todolist-dapp.analyze.ts
+
+!AgroChain.report.json
+!augur.report.json
+!democracy-earth.report.json
+!eth-hot-wallet.report.json
+!ethereum_voting_dapp.report.json
+!giveth.report.json
+!heiswap.report.json
+!metamask.report.json
+!multisender.report.json
+!publicvotes.report.json
+!todolist-dapp.report.json
