@@ -31,7 +31,18 @@
     "test:analyzer": "yarn workspace @darcher/analyzer test",
     "test:dbmonitor": "yarn workspace @darcher/dbmonitor test",
     "test:helpers": "yarn workspace @darcher/helpers test",
-    "test": "npm-run-all test:*"
+    "test": "npm-run-all test:*",
+    "analyze:AgroChain": "ts-node scripts/AgroChain.analyze.ts",
+    "analyze:Augur": "ts-node scripts/augur.analyze.ts",
+    "analyze:DemocracyEarth": "ts-node scripts/democracy-earth.analyze.ts",
+    "analyze:ETH-Hot-Wallet": "ts-node scripts/eth-hot-wallet.analyze.ts",
+    "analyze:Ethereum-Voting_Dapp": "ts-node scripts/ethereum_voting_dapp.analyze.ts",
+    "analyze:Giveth": "ts-node scripts/giveth.analyze.ts",
+    "analyze:Heiswap": "ts-node scripts/heiswap.analyze.ts",
+    "analyze:MetaMask": "ts-node scripts/metamask.analyze.ts",
+    "analyze:Multisender": "ts-node scripts/multisender.analyze.ts",
+    "analyze:PublicVotes": "ts-node scripts/publicvotes.analyze.ts",
+    "analyze:TodoList-Dapp": "ts-node scripts/todolist-dapp.analyze.ts"
   },
   "dependencies": {
     "get-port": "^5.1.1",
