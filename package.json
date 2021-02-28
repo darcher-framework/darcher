@@ -20,8 +20,6 @@
   "scripts": {
     "build:config": "yarn workspace @darcher/config build",
     "build:proto": "yarn workspace @darcher/rpc build",
-    "build:ethmonitor": "yarn workspace @darcher/go-ethereum build:ethmonitor",
-    "build:geth": "yarn workspace @darcher/go-ethereum build:geth",
     "build:dbmonitor-browser": "yarn workspace @darcher/dbmonitor-browser build",
     "build:misc": "yarn workspace @darcher/misc build",
     "build:helpers": "yarn workspace @darcher/helpers build",
